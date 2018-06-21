@@ -1,0 +1,58 @@
+Vagrant.configure(2) do |config|
+
+  config.vm.provider "virtualbox" do |vb|
+    vb.gui = true
+    vb.memory = "1024"
+  end
+
+  config.vm.define "jumphost" do |jumphost|
+    jumphost.vm.box = "centos/7"
+    jumphost.vm.host_name = "jumphost"
+    jumphost.vm.network "forwarded_port", guest: 22, host: 12220, id: "ssh"
+    jumphost.vm.network "private_network",
+                      ip: "192.168.201.10",
+                      virtualbox__intnet: "management"
+    jumphost.vm.network "private_network",
+                      ip: "192.168.101.10",
+                      virtualbox__intnet: "data"
+  end
+
+  config.vm.define "vsrx01" do |vsrx01|
+    vsrx01.vm.box = "juniper/ffp-12.1X47-D15.4-packetmode"
+    vsrx01.vm.host_name = "vsrx01"
+    vsrx01.vm.network "forwarded_port", guest: 22, host: 12221, id: "ssh"
+    vsrx01.vm.network "forwarded_port", guest: 830, host: 18301
+    vsrx01.vm.network "private_network",
+                      ip: "192.168.201.11",
+                      virtualbox__intnet: "management"
+    vsrx01.vm.network "private_network",
+                      ip: "192.168.101.11",
+                      virtualbox__intnet: "data"
+  end
+
+  config.vm.define "vsrx02" do |vsrx02|
+    vsrx02.vm.box = "juniper/ffp-12.1X47-D15.4-packetmode"
+    vsrx02.vm.host_name = "vsrx02"
+    vsrx02.vm.network "forwarded_port", guest: 22, host: 12222, id: "ssh"
+    vsrx02.vm.network "forwarded_port", guest: 830, host: 18302
+    vsrx02.vm.network "private_network",
+                      ip: "192.168.201.12",
+                      virtualbox__intnet: "management"
+    vsrx02.vm.network "private_network",
+                      ip: "192.168.101.12",
+                      virtualbox__intnet: "data"
+  end
+
+  config.vm.define "vsrx03" do |vsrx03|
+    vsrx03.vm.box = "juniper/ffp-12.1X47-D15.4-packetmode"
+    vsrx03.vm.host_name = "vsrx03"
+    vsrx03.vm.network "forwarded_port", guest: 22, host: 12223, id: "ssh"
+    vsrx03.vm.network "forwarded_port", guest: 830, host: 18303
+    vsrx03.vm.network "private_network",
+                      ip: "192.168.201.13",
+                      virtualbox__intnet: "management"
+    vsrx03.vm.network "private_network",
+                      ip: "192.168.101.13",
+                      virtualbox__intnet: "data"
+  end
+end
