@@ -1,3 +1,8 @@
+# Author :  KUNAL KANNAV
+# Contact: KKANNAV AT GMAIL DOT COM
+# This is a vagrant file which will download 3 junos hosts for you on the VM
+# Prereq : You should have Virtual box to run this
+
 Vagrant.configure(2) do |config|
 
   config.vm.provider "virtualbox" do |vb|
